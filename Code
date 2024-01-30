@@ -1,0 +1,49 @@
+import sys
+import json
+expense_items=[]
+def add_expense(expense_items):
+    date=input("Enter the date(DD-MM-YYYY):")
+    name=input("Enter the name of item:")
+    amount=float(input("Enter the amount of item:"))
+    expense={"date":date,"name":name,"amount":amount}
+    expense_items.append(expense)
+    print(f"Expense added for {name} on {date} with amount ${amount:.2f}.")
+
+def view_expense(expense_items):
+    for item in expense_items:
+         print(f"Date: {item['date']}, Name: {item['name']}, Amount: ${item['amount']:.2f}")
+
+def save_to_file(expense_items):
+    with open("expenses.json", "w") as file:
+        json.dump(expense_items, file)
+
+def load_from_file():
+    try:
+        with open("expenses.json", "r") as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+
+
+def main():
+    while True:
+       print("Welcome to Expense Tracker")
+       print("1. Add expenses")
+       print("2. view Expenses")
+       print("3. Save Expenses")
+       print("4. Exit")
+       ch=int(input("Enter your option:"))
+       if ch==1:
+          add_expense(expense_items)
+       elif ch==2:
+          view_expense(expense_items)
+       elif ch==3:
+           save_to_file(expense_items)
+       elif ch==3:
+           print("Thank you for using Expense Tracker!!! Bye!!")
+           break
+       else:
+           print("Please select an aapropriate option.")
+
+if __name__ == "__main__":
+    main()
